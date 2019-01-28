@@ -3,6 +3,7 @@ import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.EuclideanDistanceSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.UncenteredCosineSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
@@ -28,7 +29,8 @@ public class UserdBasedCF {
         DataModel model = new FileDataModel(new File(file));
 
         //根据打分矩阵，计算用户的相似度（余弦相似度，欧式距离等等）
-        UserSimilarity similarity = new UncenteredCosineSimilarity(model);
+//        UserSimilarity similarity = new UncenteredCosineSimilarity(model); //计算余弦相似度
+        UserSimilarity similarity = new EuclideanDistanceSimilarity(model);   //欧式距离相似度
 
         //找到与用户相邻的用户，即：最相似的用户
         NearestNUserNeighborhood nearestNUserNeighborhood = new NearestNUserNeighborhood(2, similarity, model);
